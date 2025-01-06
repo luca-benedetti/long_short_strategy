@@ -21,7 +21,8 @@ class DataPipeline:
         self.data_dir = base_folder
         os.makedirs(self.data_dir, exist_ok=True)
 
-    def fetch_data(self, tickers, start_date, end_date):
+    @staticmethod
+    def fetch_data(tickers, start_date, end_date):
         """
         Fetches historical stock data using yfinance.
 
@@ -56,7 +57,6 @@ class DataPipeline:
     def process_data(self, data_frames):
         """Clean and process the raw data"""
         raise NotImplemented
-
 
     def store_data(self, data, filename):
         """

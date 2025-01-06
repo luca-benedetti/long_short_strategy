@@ -1,6 +1,12 @@
 from scripts.data_loader import DataPipeline
-
-import os
+from scripts.symbols_constants import (
+    sp500_symbols,
+    nasdaq_symbols,
+    ftse_symbols,
+    dax_symbols,
+    nikkei_symbols,
+    hangseng_symbols,
+)
 
 if __name__ == "__main__":
 
@@ -9,7 +15,7 @@ if __name__ == "__main__":
     )
 
     # Define symbols and dates
-    symbols = ["AAPL", "MSFT"]
+    symbols = sp500_symbols
     start_date = "2023-01-01"
     end_date = "2023-12-31"
 
