@@ -24,3 +24,6 @@ if __name__ == "__main__":
     pipeline.store_data(data, filename="stocksss")
 
     data_2 = pipeline.load_data("stocksss")
+
+    data_wide = pipeline.flat_to_wide(data_2)
+    pipeline.store_data(data_wide, filename="wide_stocks")
