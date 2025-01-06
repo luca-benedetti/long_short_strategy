@@ -103,6 +103,39 @@ class DataPipeline(metaclass=TimingMeta):
             print(f"An error occurred during data loading: {e}")
             return None
 
+    @staticmethod
+    def flat_to_wide(data):
+        """
+        Transforms a flat dataset into wide format for statistical analysis.
+
+        Args:
+            data (pandas.DataFrame): Input DataFrame in long format,
+                                     with columns ['Date', 'Ticker', 'Close'].
+
+        Returns:
+            pandas.DataFrame: Transformed DataFrame in wide format,
+                              with 'Date' as rows and each ticker as a column.
+        """
+        if data is None or data.empty:
+            print("Input data is empty or None.")
+            return None
+
+        try:
+            # Pivot the data to wide format
+            wide_data = data.pivot(index="Date", columns="Ticker", values="Close")
+
+            # Reset the index to make 'Date' a column again
+            wide_data.reset_index(inplace=True)
+
+            print("Data successfully transformed to wide format.")
+            return wide_data
+        except KeyError as e:
+            print(f"Error during transformation: Missing column {e}")
+            return None
+        except Exception as e:
+            print(f"An error occurred during transformation: {e}")
+            return None
+
     def update_data(self, symbols, lookback_days=30):
         """Update data files with recent data"""
         raise NotImplemented

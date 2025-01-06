@@ -2,7 +2,7 @@ numpy==2.2.1
 pandas==2.2.3
 matplotlib==3.10.0
 jupyter==1.1.1
-seaborn
-statsmodels
-scipy
-yfinance
+seaborn==0.13.2
+statsmodels==0.14.4
+scipy==1.14.1
+yfinance==0.2.51
