@@ -16,3 +16,9 @@ results/
 # Ignore OS and IDE files
 .DS_Store
 *.swp
+.idea/misc.xml
+.idea/vcs.xml
+.idea/modules.xml
+.idea/long_short_strategy.iml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/.gitignore
