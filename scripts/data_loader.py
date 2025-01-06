@@ -3,12 +3,14 @@ import pandas as pd
 import yfinance as yf
 from datetime import datetime
 
+from scripts.time_decorator import TimingMeta
+
 BASE_DATA_FOLDER = (
     r"C:\Users\LucaBenedetti\Documents\personal_dev\long_short_strategy\data"
 )
 
 
-class DataPipeline:
+class DataPipeline(metaclass=TimingMeta):
     def __init__(self, base_folder=BASE_DATA_FOLDER):
         """
         Initializes the data pipeline.
