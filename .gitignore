@@ -9,6 +9,8 @@ venv/
 data/raw/
 data/processed/
 results/
+**/data/
+**.csv
 
 # Ignore Jupyter Notebook checkpoints
 .ipynb_checkpoints/
