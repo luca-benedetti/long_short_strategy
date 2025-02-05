@@ -7,3 +7,4 @@ statsmodels==0.14.4
 scipy==1.14.1
 yfinance==0.2.51
 scikit-learn==1.6.1
+pydantic==2.10.6
