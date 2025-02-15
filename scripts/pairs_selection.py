@@ -90,4 +90,60 @@ class PairSelector(metaclass=TimingMeta):
                 p_value_matrix.loc[asset_y, asset_x] = p_value
                 p_value_matrix.loc[asset_x, asset_y] = p_value  # p-value is the same in both directions
 
-        return p_value_matrix, beta_matrix 
+        return p_value_matrix, beta_matrix
+    
+    @staticmethod
+    def get_smallest_values(df: DataFrame, n:Optional[int]=10):
+        """
+        Extracts the smallest n values from the upper triangular part of a symmetric DataFrame,
+        avoiding duplicate (i, j) and (j, i) pairs.
+
+        Parameters:
+            df (pd.DataFrame): Input symmetric DataFrame.
+            n (int): Number of smallest values to extract.
+
+        Returns:
+            pd.DataFrame: A DataFrame containing the smallest n values and their row/column indices.
+        """
+        # Get the upper triangular part of the matrix, excluding the diagonal
+        upper_tri = df.where(np.triu(np.ones(df.shape), k=1).astype(bool))
+        
+        # Flatten the DataFrame and drop NaN values (which come from lower triangle)
+        flattened = upper_tri.stack()
+        
+        # Sort values and get the smallest n
+        smallest = flattened.nsmallest(n)
+        
+        # Create a DataFrame with value, row, and column information
+        result = pd.DataFrame({
+            "value": smallest.values,
+            "asset_1": [index[0] for index in smallest.index],
+            "asset_2": [index[1] for index in smallest.index],
+        })
+        
+        return result
+
+    @staticmethod
+    def get_values_below_threshold(df: DataFrame, threshold:Optional[float]=0.05):
+        """
+        Extracts all values below a given threshold from a DataFrame, along with their row and column indices.
+
+        Parameters:
+            df (pd.DataFrame): Input DataFrame representing the matrix.
+            threshold (float): The threshold value to filter the DataFrame.
+
+        Returns:
+            pd.DataFrame: A DataFrame containing values below the threshold and their row/column indices.
+        """
+        # Apply the mask for values below the threshold
+        mask = (df < threshold) & np.tril(np.ones(df.shape), k=-1).astype(bool)
+        filtered = df[mask]
+
+        # Flatten the result and get row-column indices
+        result = pd.DataFrame({
+            "value": filtered.stack().values,
+            "asset_1": [index[0] for index in filtered.stack().index],
+            "asset_2": [index[1] for index in filtered.stack().index],
+        })
+
+        return result
